@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="Aqip1z" name="GettoneSpacePanner_Hardware" projectType="audioplug" version="1.1.0" pluginManufacturerCode="Manu" pluginCode="Aqip"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
+              pluginName="Skeuomorphic Panner"
+              pluginVST3Category="Spatial,Tools" companyName="gett1" companyCopyright="gett1">
+  <MAINGROUP id="UxU6za" name="GettoneSpacePanner_Hardware">
+    <GROUP id="{3FD3F896-AC8C-AE8C-7A79-34984EF6C034}" name="Resources">
+      <FILE id="pXSans" name="PixelifySans.ttf" compile="0" resource="1" file="Assets/PixelifySans.ttf"/>
+      <FILE id="g9uKnp" name="anime.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/anime.png"/>
+      <FILE id="fcS4jD" name="beach.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/beach.png"/>
+      <FILE id="YK3TvQ" name="cosmic.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/cosmic.png"/>
+      <FILE id="fIffXV" name="graffiti.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/graffiti.png"/>
+      <FILE id="g7oCtF" name="screw.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/screw.png"/>
+      <FILE id="tHWugs" name="tree.png" compile="0" resource="1" file="immagini Skeuomorphic Panner/tree.png"/>
+      <FILE id="nNFgjt" name="wood_beach.jpg" compile="0" resource="1" file="immagini Skeuomorphic Panner/wood_beach.jpg"/>
+      <FILE id="qd2gVZ" name="wood_cosmic.jpg" compile="0" resource="1" file="immagini Skeuomorphic Panner/wood_cosmic.jpg"/>
+      <FILE id="djvRIm" name="wood_garage.jpg" compile="0" resource="1" file="immagini Skeuomorphic Panner/wood_garage.jpg"/>
+      <FILE id="K2SJq4" name="wood_kawaii.jpg" compile="0" resource="1" file="immagini Skeuomorphic Panner/wood_kawaii.jpg"/>
+      <FILE id="tfkXeq" name="wood_vintage.jpg" compile="0" resource="1"
+            file="immagini Skeuomorphic Panner/wood_vintage.jpg"/>
+    </GROUP>
+    <GROUP id="{E77F22A1-97EA-9395-4FEE-14FF1B25741C}" name="Source">
+      <FILE id="gttCat" name="Gett1Cat.h" compile="0" resource="0" file="Source/Gett1Cat.h"/>
+      <FILE id="qWi0Cl" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="royKWm" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="tJc89E" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="Oev1ID" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2026 targetFolder="Builds/VisualStudio2026">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="SkeuomorphicPanner"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="GettoneSpacePanner"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2026>
+  </EXPORTFORMATS>
+</JUCERPROJECT>

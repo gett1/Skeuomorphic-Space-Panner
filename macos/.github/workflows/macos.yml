@@ -1,0 +1,150 @@
+name: Compila e verifica macOS (gratis entro quota Actions)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'macos/1.1.0'
+    name: macOS ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            arch: Intel-x86_64
+            cpu: x86_64
+          - runner: macos-15
+            arch: AppleSilicon-arm64
+            cpu: arm64
+
+    steps:
+      - name: Sorgenti
+        uses: actions/checkout@v4
+
+      - name: Versioni degli strumenti
+        run: |
+          xcodebuild -version
+          cmake --version
+          clang++ --version
+
+      - name: Controlla presenza file e riferimenti grafici
+        run: python3 scripts/verifica_risorse.py
+
+      - name: Configura JUCE / CMake
+        shell: bash
+        run: |
+          cmake -S . -B build -G Xcode \
+            -DCMAKE_OSX_ARCHITECTURES="${{ matrix.cpu }}" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 \
+            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO
+
+      - name: Compila VST3 + AU + Standalone
+        run: cmake --build build --config Release --parallel 2
+
+      - name: Identifica e controlla i bundle compilati
+        shell: bash
+        run: |
+          set -euo pipefail
+          for extension in vst3 component app; do
+            found="$(find build -type d -name "*.$extension" -not -path '*CMakeFiles*' -print -quit)"
+            if [[ -z "$found" ]]; then
+              echo "ERRORE: file .$extension non trovato"
+              exit 1
+            fi
+            echo "TROVATO: $found"
+          done
+          find build -type d \( -name '*.vst3' -o -name '*.component' -o -name '*.app' \) -print
+
+      - name: Prepara installer PKG, ZIP e firme locali
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/VST3 dist/AU dist/Standalone
+          vst="$(find build -type d -name '*.vst3' -print -quit)"
+          au="$(find build -type d -name '*.component' -print -quit)"
+          app="$(find build -type d -name '*.app' -print -quit)"
+          cp -R "$vst" dist/VST3/
+          cp -R "$au" dist/AU/
+          cp -R "$app" dist/Standalone/
+          cp INSTALLAZIONE_MACOS.txt dist/
+          cp Resources/OFL.txt dist/PixelifySans-OFL.txt
+          python3 scripts/verifica_bundle_macos.py dist "${{ matrix.cpu }}"
+          echo "Bundle macOS e architetture (lipo):"
+          find dist -type f -perm -111 -print | while IFS= read -r file; do
+            echo "$file"
+            lipo -archs "$file" 2>/dev/null || true
+          done
+          bash scripts/package_macos.sh "${{ matrix.cpu }}"
+          ditto -c -k --keepParent dist "SkeuomorphicSpacePanner-1.1.0-macOS-${{ matrix.arch }}.zip"
+
+      - name: Prova installazione PKG e Audio Unit
+        shell: bash
+        run: |
+          set -euo pipefail
+          pkg="$(find dist -maxdepth 1 -name '*-Installer.pkg' -print -quit)"
+          test -n "$pkg"
+          sudo installer -pkg "$pkg" -target / 2>&1 | tee installer-report.txt
+          for bundle in \
+            "/Library/Audio/Plug-Ins/Components/Skeuomorphic Space Panner.component" \
+            "/Library/Audio/Plug-Ins/VST3/Skeuomorphic Space Panner.vst3" \
+            "/Applications/Skeuomorphic Space Panner.app"; do
+            test -d "$bundle"
+            codesign --verify --deep --strict --verbose=2 "$bundle"
+          done
+          # Refresh only this disposable CI runner's AU registrar after installing.
+          killall AudioComponentRegistrar 2>/dev/null || true
+          sleep 3
+          auval -a 2>&1 | tee au-list-report.txt
+          auval -v aufx Spnr Gett 2>&1 | tee auval-report.txt
+
+      # pluginval verificato su Intel; la build arm64 verifica compilazione e bundle.
+      # Il validatore e' un tool esterno: eseguire test dentro Ableton su Mac resta obbligatorio.
+      - name: Scarica pluginval (solo Intel)
+        if: matrix.cpu == 'x86_64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 \
+            https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip \
+            -o pluginval.zip
+          mkdir pluginval-unpacked
+          ditto -x -k pluginval.zip pluginval-unpacked
+          find pluginval-unpacked -iname 'pluginval' -o -iname 'pluginval.app'
+
+      - name: Valida VST3 con pluginval (solo Intel)
+        if: matrix.cpu == 'x86_64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          executable="$(find pluginval-unpacked -type f -path '*/Contents/MacOS/pluginval' -print -quit)"
+          if [[ -z "$executable" ]]; then
+            echo "Non trovo l'eseguibile pluginval nella release"
+            exit 1
+          fi
+          chmod +x "$executable"
+          vst="$(find dist/VST3 -type d -name '*.vst3' -print -quit)"
+          "$executable" --validate-in-process --skip-gui-tests --strictness-level 5 "$vst" 2>&1 | tee pluginval-report.txt
+
+      - name: Carica build Mac e log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SkeuomorphicSpacePanner-${{ matrix.arch }}
+          path: |
+            SkeuomorphicSpacePanner-1.1.0-macOS-${{ matrix.arch }}.zip
+            pluginval-report.txt
+            installer-report.txt
+            auval-report.txt
+            au-list-report.txt
+          if-no-files-found: warn
+          retention-days: 7
+

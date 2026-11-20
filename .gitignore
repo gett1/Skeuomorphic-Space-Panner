@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+.env
+.env.*
+**/build*/
+**/dist/
+**/__pycache__/
+*.pfx
+*.p12
+*.pem
+*.key

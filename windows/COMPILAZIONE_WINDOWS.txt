@@ -1,0 +1,31 @@
+SKEUOMORPHIC SPACE PANNER 1.1.0
+Compilazione e creazione del pacchetto Windows
+
+REQUISITI
+- Visual Studio 2026 con il carico di lavoro Desktop development with C++ e Windows SDK.
+- CMake con il generatore Visual Studio 18 2026.
+- Sorgenti JUCE in D:\JUCE. Per un altro percorso, aggiungi -JucePath 'D:\percorso\JUCE'.
+- Per creare l'installer e il RAR, Inno Setup 6.3 o successivo e WinRAR con Rar.exe.
+
+DA POWERSHELL, DALLA CARTELLA ESTRATTA
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\Windows\Build-Windows.ps1"
+
+Per compilare solo il VST3, aggiungi -PluginOnly.
+Se Inno Setup o WinRAR sono in una cartella personalizzata, passa -Iscc oppure -Rar
+seguiti dal percorso completo del relativo eseguibile.
+
+OUTPUT
+- build-vs18\GettoneSpacePanner_artefacts\Release\VST3\Skeuomorphic Space Panner.vst3
+- dist\Skeuomorphic_Space_Panner_Win_Installer.exe
+- dist\Skeuomorphic_Space_Panner_1.1.0_Windows_x64.rar
+
+VERIFICA SU WINDOWS
+Chiudi Ableton Live prima di eseguire l'installer.
+Per provare la migrazione, parti da un'installazione 1.0.0 e apri una copia
+di un set .als con un'istanza gia salvata dopo aver aggiornato alla 1.1.0.
+Controlla che l'istanza mostri la nuova GUI e conservi il Vibe e i valori.
+Poi carica una nuova istanza, prova i cinque Vibe, ADV, SEND e SAVE, riapri
+il progetto e verifica che la DAW riconosca un solo Skeuomorphic Panner.
+
+Per Gumroad usa il RAR generato in dist. Contiene l'installer, il manuale
+utente, la guida Windows, il README e la licenza del font.

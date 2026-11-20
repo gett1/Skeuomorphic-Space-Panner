@@ -1,0 +1,19 @@
+SKEUOMORPHIC SPACE PANNER 1.1.0
+gett1 | Windows x64 | VST3
+
+INSTALLAZIONE
+Chiudi la DAW, estrai l'archivio e avvia Skeuomorphic_Space_Panner_Win_Installer.exe.
+Per un aggiornamento, leggi prima Manuali/Installazione_Windows.pdf.
+Poi riapri la DAW e controlla la cartella dei plug-in VST3 di sistema.
+
+DOCUMENTAZIONE
+Manuali/Manuale_Utente.pdf         Pad spaziale, controlli, preset, prime riflessioni.
+Manuali/Installazione_Windows.pdf  Installazione, aggiornamento e verifica nella DAW.
+PixelifySans-OFL.txt               Licenza del carattere incorporato nell'interfaccia.
+
+NOVITA' DELLA 1.1.0
+- Interfaccia gett1 con Pixelify Sans, gattino e manopole in ottone.
+- Layout scalabile e pannello ADV accessibile anche a dimensioni ridotte.
+- Cinque ambienti visivi originali e stessi parametri della sessione.
+
+Sviluppato da Giuseppe Ambrosino / gett1.

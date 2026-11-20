@@ -1,0 +1,46 @@
+SKEUOMORPHIC SPACE PANNER 1.1.0 | gett1
+Installer di test macOS 12 o successivo
+
+SCEGLI IL FILE CORRETTO
+AppleSilicon-arm64: Mac M1, M2, M3 e successivi con chip Apple.
+Intel-x86_64: Mac con processore Intel.
+
+INSTALLAZIONE
+1. Estrai lo ZIP e chiudi completamente GarageBand, Logic e le altre DAW.
+2. Se hai copiato manualmente la precedente versione in ~/Library/Audio/Plug-Ins,
+   sposta temporaneamente sul Desktop SOLO i vecchi bundle Skeuomorphic Space Panner
+   presenti nelle sottocartelle Components e VST3. Evita copie doppie nella Libreria
+   utente e nella Libreria di sistema. Conserva il backup fino al completamento del test.
+3. Apri il file che termina con -Installer.pkg e segui l'installazione.
+   Per la Libreria di sistema viene richiesta la password amministratore del Mac.
+4. Riapri la DAW; se non vede il plugin, riavvia il Mac e riprova.
+
+DESTINAZIONI
+AU: /Library/Audio/Plug-Ins/Components/Skeuomorphic Space Panner.component
+VST3: /Library/Audio/Plug-Ins/VST3/Skeuomorphic Space Panner.vst3
+Standalone: /Applications/Skeuomorphic Space Panner.app
+Guida e licenza font: /Library/Application Support/gett1/SpacePanner
+
+GARAGEBAND / LOGIC PRO
+Usa il formato Audio Unit (AU). In GarageBand abilita Audio Units nelle impostazioni
+Audio/MIDI, seleziona una traccia audio e apri Controlli Smart > Plug-in > Audio Units
+> gett1 > Skeuomorphic Space Panner.
+
+ABLETON LIVE / FL STUDIO / REAPER
+Usa VST3 e abilita la scansione della cartella VST3 di sistema nella DAW.
+La presenza dei formati non equivale a un test manuale su ogni DAW.
+
+VERIFICA
+Prova caricamento, interfaccia, audio stereo, tutti i temi, preset e pannello ADV.
+Salva e riapri un progetto di prova; verifica il ripristino dei parametri.
+Gli identificativi AU e VST3 della versione Mac precedente sono conservati.
+Verifica prima una copia dei tuoi vecchi progetti e mantieni un backup della vecchia build.
+
+STATO DELLA FIRMA
+I bundle hanno una firma locale ad-hoc per verificarne l'integrita'.
+Questo installer di test NON ha firma Developer ID Installer e NON e' notarizzato
+da Apple. macOS puo' quindi bloccare o richiedere un'autorizzazione all'apertura.
+Se il sistema offre Apri comunque in Impostazioni di Sistema > Privacy e sicurezza,
+usalo soltanto per questa build ottenuta dal progetto gett1 di cui conosci l'origine.
+Non disabilitare globalmente le protezioni del Mac.
+Per la distribuzione con Developer ID occorrono certificati e notarizzazione Apple.
